@@ -6,15 +6,10 @@ services:
     container_name: reverse_proxy
     ports:
       - "80:80"
-      # - "443:443"        # uncomment when you add SSL
+
     volumes:
-      # Your custom nginx.conf (if you have one), else use the default in the image
-      # - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      # NGINX template for default.conf (with envsubst support)
       - ./nginx/templates:/etc/nginx/templates:ro
-      # Static files served at http://localhost/doc
       - ./public_html:/usr/share/nginx/html:ro
-      # NGINX access/error logs on the host
       - ./container_logs/nginx:/var/log/nginx
     environment:
       - NGINX_ENVSUBST_TEMPLATE_SUFFIX=.template
@@ -33,7 +28,6 @@ services:
     ports:
       - "3001:3001"
     volumes:
-      # live‑reload your source into the container (requires nodemon or similar)
       - ./:/home/node/
     command: npm start
     restart: unless-stopped
