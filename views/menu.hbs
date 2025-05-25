@@ -1,0 +1,16 @@
+<section class="dish-list">
+    {{#if dishes.length}}
+        {{#each dishes}}
+        <article class="dish-item">
+            <h2>{{this.name}}</h2>
+            <p class="price">{{this.price}}</p>
+            <p class="description">{{this.description}}</p>
+            {{#if this.rating}}
+                <p class="rating">Rating: {{this.rating}}</p>
+            {{/if}}
+        </article>
+        {{/each}}
+    {{else}}
+        <p>No dishes available today. Please check back later!</p>
+    {{/if}}
+</section>

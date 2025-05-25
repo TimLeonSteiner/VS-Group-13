@@ -1,0 +1,26 @@
+<section class="rankings-list">
+    {{#if rankedDishes.length}}
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Dish Name</th>
+                <th>Rating</th>
+                <th>Votes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each rankedDishes}}
+            <tr>
+                <td>#{{this.rank}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.rating}}</td>
+                <td>{{this.votes}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    {{else}}
+        <p>No rankings available yet.</p>
+    {{/if}}
+</section>
