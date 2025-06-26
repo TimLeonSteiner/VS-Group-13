@@ -1,0 +1,15 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mensa-db
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mensa-admin
+      MONGO_INITDB_ROOT_PASSWORD: mensaboys123
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
