@@ -1,18 +1,14 @@
-// mensa-app-nextjs/app/api/rankings/route.ts
-
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
-import { Rating } from '@/lib/models'; // Make sure you have created models.ts
+import Rating from '@/lib/models/Rating';
 
 export async function GET() {
   try {
-    // Step 1: Connect to the database
     await dbConnect();
 
-    // Step 2: Run the aggregation query to calculate average ratings
     const averageRatings = await Rating.aggregate([
       {
-        $lookup: { // Join with menuentries to get dish IDs
+        $lookup: { //
           from: 'menuentries',
           localField: 'menuEntry',
           foreignField: '_id',
@@ -21,7 +17,7 @@ export async function GET() {
       },
       { $unwind: '$menuEntryInfo' },
       {
-        $lookup: { // Join with dishes to get the dish names
+        $lookup: {
           from: 'dishes',
           localField: 'menuEntryInfo.dish',
           foreignField: '_id',
@@ -30,24 +26,24 @@ export async function GET() {
       },
       { $unwind: '$dishInfo' },
       {
-        $group: { // Group by dish name and calculate average stars and count
+        $group: {
           _id: '$dishInfo.name',
           averageStars: { $avg: '$stars' },
           count: { $sum: 1 },
         },
       },
-      { $sort: { averageStars: -1 } }, // Sort by the best rating
+      { $sort: { averageStars: -1 } },
     ]);
 
-    // Step 3: Transform the data to match what the frontend expects
+
     const rankedDishes = averageRatings.map((dish, index) => ({
         rank: index + 1,
         name: dish._id,
-        rating: dish.averageStars.toFixed(2), // Format to 2 decimal places
+        rating: dish.averageStars.toFixed(2),
         votes: dish.count,
     }));
 
-    // Step 4: Send the real, calculated data to the frontend
+
     return NextResponse.json(rankedDishes, { status: 200 });
 
   } catch (error) {

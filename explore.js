@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Schemas and Models are redefined for this standalone script
 const dishSchema = new mongoose.Schema({ name: String, category: String });
 const menuEntrySchema = new mongoose.Schema({ date: Date, dish: { type: mongoose.Schema.Types.ObjectId, ref: 'Dish' } });
 const ratingSchema = new mongoose.Schema({ menuEntry: { type: mongoose.Schema.Types.ObjectId, ref: 'MenuEntry' }, stars: Number });
@@ -23,7 +22,7 @@ async function runQueries() {
     const todaysMenu = await MenuEntry.find({ date: { $gte: startOfDay, $lte: endOfDay } }).populate('dish');
     console.log(todaysMenu);
 
-    // Query 2: Calculate average rating for each dish
+
     console.log("\n--- Durchschnittliche Bewertungen ---");
     const averageRatings = await Rating.aggregate([
         { $lookup: { from: 'menuentries', localField: 'menuEntry', foreignField: '_id', as: 'menuData' } },

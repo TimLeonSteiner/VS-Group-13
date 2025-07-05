@@ -18,11 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {/*
-        Add suppressHydrationWarning to the body tag.
-        This tells React to ignore attribute mismatches on this specific element,
-        which is necessary when browser extensions modify the HTML.
-      */}
+      {}
       <body suppressHydrationWarning={true}>
         <header>
           <nav>

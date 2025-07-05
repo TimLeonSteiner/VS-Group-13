@@ -1,14 +1,15 @@
-
+// mensa-app-nextjs/app/menu/page.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
+import RatingForm from '@/components/RatingForm'; // 1. Make sure you import the component
 
-
+// This type definition is now correct!
 type Dish = {
+    _id: string;
     name: string;
     price: string;
     description: string;
-    rating: string;
 };
 
 export default function MenuPage() {
@@ -17,7 +18,6 @@ export default function MenuPage() {
 
     useEffect(() => {
         async function fetchDishes() {
-            // Ruft die API-Route auf, die wir in Schritt 1 erstellt haben
             const response = await fetch('/api/menu/heute');
             const data = await response.json();
             setDishes(data);
@@ -33,12 +33,14 @@ export default function MenuPage() {
     return (
         <section className="dish-list">
             {dishes.map((dish) => (
-                // Wichtig: React braucht einen "key" für jedes Element in einer Liste
-                <article className="dish-item" key={dish.name}>
+                // 2. Use the unique dish._id for the key
+                <article className="dish-item" key={dish._id}>
                     <h2>{dish.name}</h2>
                     <p className="price">{dish.price}</p>
                     <p className="description">{dish.description}</p>
-                    <p className="rating">Rating: {dish.rating}</p>
+
+                    {/* 3. Remove the old rating line and add the interactive form instead */}
+                    <RatingForm menuEntryId={dish._id} />
                 </article>
             ))}
         </section>
