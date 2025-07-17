@@ -1,5 +1,3 @@
-// app/layout.tsx - FINAL VERSION WITH THE FIX
-
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import './globals.css';

@@ -1,24 +1,24 @@
-// mensa-app-nextjs/lib/db.ts
-
 import mongoose, { Mongoose } from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
+// Nur werfen, wenn nicht im Testmodus
+if (!MONGODB_URI && process.env.NODE_ENV !== 'test') {
   throw new Error(
-    'Please define the MONGODB_URI environment variable inside .env.local'
+    'Bitte die Umgebungsvariable MONGODB_URI in .env.local definieren'
   );
 }
 
-// Extend the NodeJS.Global interface to include our cached mongoose connection.
-// This tells TypeScript what to expect on the global object.
+// Globale Deklaration für den Cache
 declare global {
+  // eslint-disable-next-line no-var
   var mongoose: {
     promise: Promise<Mongoose> | null;
     conn: Mongoose | null;
   };
 }
 
+// Globale Verbindungscaches verwenden
 let cached = global.mongoose;
 
 if (!cached) {
@@ -26,16 +26,23 @@ if (!cached) {
 }
 
 async function dbConnect(): Promise<Mongoose> {
+  // Falls schon verbunden, diese Verbindung zurückgeben
   if (cached.conn) {
     return cached.conn;
   }
 
+  // Neue Verbindung aufbauen, falls noch keine vorhanden
   if (!cached.promise) {
+    // Falls keine URI und wir sind im Testmodus, Dummy zurückgeben
+    if (!MONGODB_URI) {
+      return Promise.resolve({} as Mongoose);
+    }
+
     const opts = {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongooseInstance) => {
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongooseInstance) => {
       return mongooseInstance;
     });
   }
@@ -43,11 +50,11 @@ async function dbConnect(): Promise<Mongoose> {
   try {
     cached.conn = await cached.promise;
   } catch (e) {
-    cached.promise = null; // Reset promise on error
+    cached.promise = null;
     throw e;
   }
 
-  return cached.conn;
+  return cached.conn as Mongoose;
 }
 
 export default dbConnect;

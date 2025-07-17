@@ -1,6 +1,5 @@
 import { Schema, model, models, Document, Model } from 'mongoose';
 
-// --- Interfaces for TypeScript ---
 export interface IDish extends Document {
   name: string;
   description?: string;
@@ -18,13 +17,12 @@ export interface IMenuEntry extends Document {
 
 export interface IRating extends Document {
   menuEntry: Schema.Types.ObjectId | IMenuEntry;
-  user: Schema.Types.ObjectId; // Assuming user model exists
+  user: Schema.Types.ObjectId;
   stars: number;
   comment?: string;
   timestamp: Date;
 }
 
-// --- Mongoose Schemas ---
 const dishSchema = new Schema<IDish>({
   name: { type: String, required: true },
   description: String,
@@ -48,8 +46,6 @@ const ratingSchema = new Schema<IRating>({
   timestamp: { type: Date, default: Date.now },
 });
 
-// --- Mongoose Models ---
-// This prevents Mongoose from recompiling the model on every hot-reload
 export const Dish: Model<IDish> = models.Dish || model<IDish>('Dish', dishSchema);
 export const MenuEntry: Model<IMenuEntry> = models.MenuEntry || model<IMenuEntry>('MenuEntry', menuEntrySchema);
 export const Rating: Model<IRating> = models.Rating || model<IRating>('Rating', ratingSchema);

@@ -1,11 +1,10 @@
-// lib/models/MenuEntry.ts
 import { Schema, model, models } from 'mongoose';
 
 const menuEntrySchema = new Schema({
     date: { type: Date, required: true },
     dish: {
         type: Schema.Types.ObjectId,
-        ref: 'Dish', // This 'ref' is crucial for .populate()
+        ref: 'Dish',
         required: true
     },
     canteenId: { type: String, required: true },

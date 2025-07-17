@@ -1,4 +1,3 @@
-// lib/models/Dish.ts
 import { Schema, model, models } from 'mongoose';
 
 const dishSchema = new Schema({

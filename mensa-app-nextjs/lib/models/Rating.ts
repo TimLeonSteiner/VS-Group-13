@@ -1,4 +1,3 @@
-// lib/models/Rating.ts
 import { Schema, model, models } from 'mongoose';
 
 const ratingSchema = new Schema({
