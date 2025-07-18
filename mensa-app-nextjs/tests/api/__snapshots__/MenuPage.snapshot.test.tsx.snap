@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MenuPage Snapshot Test sollte nach dem Laden der Daten mit dem Snapshot übereinstimmen 1`] = `
+<div>
+  <section
+    class="dish-list"
+  >
+    <article
+      class="dish-item"
+    >
+      <h2>
+        Test-Gericht
+      </h2>
+      <p
+        class="price"
+      >
+        €5.00
+      </p>
+      <p
+        class="description"
+      >
+        Ein leckerer Test.
+      </p>
+      <form
+        style="margin-top: 1rem;"
+      >
+        <div>
+          <strong>
+            Rate this:
+          </strong>
+          <span
+            style="cursor: pointer; font-size: 2rem; color: lightgray;"
+          >
+            ★
+          </span>
+          <span
+            style="cursor: pointer; font-size: 2rem; color: lightgray;"
+          >
+            ★
+          </span>
+          <span
+            style="cursor: pointer; font-size: 2rem; color: lightgray;"
+          >
+            ★
+          </span>
+          <span
+            style="cursor: pointer; font-size: 2rem; color: lightgray;"
+          >
+            ★
+          </span>
+          <span
+            style="cursor: pointer; font-size: 2rem; color: lightgray;"
+          >
+            ★
+          </span>
+        </div>
+        <button
+          disabled=""
+          type="submit"
+        >
+          Submit Rating
+        </button>
+      </form>
+    </article>
+  </section>
+</div>
+`;

@@ -1,4 +1,3 @@
-// mensa-app-nextjs/app/rankings/page.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
