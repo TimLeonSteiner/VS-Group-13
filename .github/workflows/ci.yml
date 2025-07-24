@@ -18,6 +18,8 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        working-directory: ./mensa-app-nextjs
 
       - name: Run unit & system tests
         run: npm test
+        working-directory: ./mensa-app-nextjs
